@@ -1,0 +1,33 @@
+version: '1'
+services:
+  - name: voting_service
+    image: your_docker_repo/voting_service:latest
+    replicas: 1
+    commands:
+      - python scripts/cast_votes.py
+      - python scripts/upload_data_to_ipfs.py
+      - python scripts/multisend_transactions.py
+    dependencies:
+      - ipfs_client
+      - web3_client
+
+  - name: ipfs_client
+    image: your_docker_repo/ipfs_client:latest
+    replicas: 1
+    commands:
+      - ipfs daemon
+
+  - name: web3_client
+    image: your_docker_repo/web3_client:latest
+    replicas: 1
+    commands:
+      - web3 --connect your_provider_url
+
+  - name: monitor_agent
+    image: your_docker_repo/monitor_agent:latest
+    replicas: 1
+    commands:
+      - python scripts/monitor_activity.py
+    dependencies:
+      - voting_service
+      - ipfs_client

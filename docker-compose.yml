@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  voting_service:
+    image: voting_service:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TENDERLY_URL=${TENDERLY_URL}
+      - CONTRACT_ADDRESS=${CONTRACT_ADDRESS}
+      - CONTRACT_ABI=${CONTRACT_ABI}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - LOG_FILE_PATH=${LOG_FILE_PATH}
+
+  ipfs_client:
+    image: ipfs_client:latest
+    build:
+      context: .
+      dockerfile: Dockerfile-ipfs
+    ports:
+      - "5001:5001"
+
+  web3_client:
+    image: web3_client:latest
+    build:
+      context: .
+      dockerfile: Dockerfile-web3
+
+  monitor_agent:
+    image: monitor_agent:latest
+    build:
+      context: .
+      dockerfile: Dockerfile-monitor
+    environment:
+      - TENDERLY_URL=${TENDERLY_URL}
+      - LOG_FILE_PATH=${LOG_FILE_PATH}
