@@ -3,8 +3,8 @@
 1. **Clone the Repository**
 
     ```bash
-    git clone <repository-url>
-    cd olas-autonomy-project
+    git clone (https://github.com/pandiselvam459476/Decentralized-Voting-System.git)
+    cd Decentralized-Voting-System
     ```
 
 2. **Create and Configure Environment Variables**
